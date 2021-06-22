@@ -1,0 +1,48 @@
+<div class="col-lg-12">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-4">
+        <div class="container-fluid">
+            <div class="row d-flex">
+                <div class="col-lg-12">
+                    <div class="card2 card">
+                        <div class="card-header"><h3>Sign In</h3></div><hr/>
+                        <form #loginForm="ngForm" name="loginForm" id="loginForm" (ngSubmit)="onLoginSubmit(loginForm)"
+                            novalidate>
+                            <div class="form-group">
+                                <label>EmailId:</label>
+                                <input type="text" name="emailId" class="form-control" #emailAddress="ngModel"
+                                    [(ngModel)]="loginService.user.emailId" placeholder="Email Address"
+                                    [ngClass]="{ 'is-invalid': loginForm.submitted && loginService.user.emailId === '' }"
+                                    required  [pattern]="emailPattern">
+                                <div class="text-danger"
+                                    *ngIf="loginForm.submitted && loginService.user.emailId === ''">
+                                    EmailId is required
+                                </div>
+                                <div *ngIf="emailAddress.errors &&(emailAddress.touched || emailAddress.dirty)" class="text-danger">
+                                    <div [hidden]="!emailAddress.errors?.pattern">
+                                        Email address is not valid.. .!
+                                    </div>
+                                  </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Password:</label>
+                                <input type="password" name="password" class="form-control"
+                                    [(ngModel)]="loginService.user.password" placeholder="Password"
+                                    [ngClass]="{ 'is-invalid': loginForm.submitted && loginService.user.password === '' }"
+                                    required>
+                                <div class="text-danger"
+                                    *ngIf="loginForm.submitted && loginService.user.password == ''">
+                                    Password is
+                                    required</div>
+                            </div>                            
+                            <div class="form-group text-right">
+                                <button class="button1"><span>Sign In </span></button>                               
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4"></div>
+</div>

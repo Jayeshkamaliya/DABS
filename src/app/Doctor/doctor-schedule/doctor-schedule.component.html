@@ -1,0 +1,134 @@
+<div class="container">
+    <h2>
+        Doctor Schedule Management
+        <div style="float: right;">
+            <button type="button" class="button1" data-toggle="modal" data-target="#doctorScheduleModal">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i> &nbsp;Add
+            </button>
+        </div>
+    </h2>
+    <hr />
+    <br />
+    <div class="card1">
+        <div class="card-body">
+            <div class="row">
+                <table class="table table-bordered table-responsive-md">
+                    <thead>
+                        <tr>
+                            <th class="text-center table-th" *ngFor="let column of colNameList">
+                                {{column.scheduleDay}}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td *ngFor="let column of colNameList">
+                                <table class="table">
+                                    <tr *ngFor="let row of scheduleList">
+                                        <td class="text-center" *ngIf="column.scheduleDay === row.scheduleDay">
+                                            {{ row.scheduleStartTime + ' : 00'}} To {{ row.scheduleEndTime + ' : 00'}}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr *ngIf="colNameList.length === 0" class="text-center">
+                            <td>NO DATA AVAILABLE</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--DOCTOR SCHEDULE DATA MODAL -->
+<div class="modal fade" id="doctorScheduleModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" id="modal_title"><strong>Add Doctor Schedule Data</strong></h4>
+                <button type="button" class="close" (click)="hideDrScheduleModal()">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row d-flex">
+                    <div class="col-lg-12">
+                        <form #doctorScheduleForm="ngForm" name="doctorScheduleForm" id="doctorScheduleForm"
+                            (ngSubmit)="saveDoctorSchedule()" novalidate>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>Schedule Date</label>
+                                        <div>
+                                            <input type='date' class="form-control" name="scheduleDate"
+                                                id="scheduleDate" [max]="dateMax" [min]="dateMin"
+                                                [(ngModel)]="doctorService.doctorScheduleSet.scheduleDate" />
+                                        </div>
+                                        <div class="text-danger"
+                                            *ngIf="doctorScheduleForm.submitted && doctorService.doctorScheduleSet.scheduleDate === ''">
+                                            Schedule Date is required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>Start Time</label>
+                                        <div>
+                                            <input class="form-control" type="number" id="scheduleStartTime"
+                                                name="scheduleStartTime" min="0" max="23"
+                                                (keypress)="numberOnly($event)"
+                                                [(ngModel)]="doctorService.doctorScheduleSet.scheduleStartTime"
+                                                required />
+                                        </div>
+                                        <div class="text-danger"
+                                            *ngIf="doctorScheduleForm.submitted && doctorService.doctorScheduleSet.scheduleStartTime === ''">
+                                            Start Time is required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>End Time</label>
+                                        <div><input class="form-control" type="number" id="scheduleEndTime"
+                                                name="scheduleEndTime" min="0" max="23" (keypress)="numberOnly($event)"
+                                                [(ngModel)]="doctorService.doctorScheduleSet.scheduleEndTime"
+                                                (focusout)="endTimeCheck(doctorService.doctorScheduleSet.scheduleStartTime,doctorService.doctorScheduleSet.scheduleEndTime)"
+                                                required />
+                                        </div>
+                                        <div class="text-danger"
+                                            *ngIf="doctorScheduleForm.submitted && doctorService.doctorScheduleSet.scheduleEndTime === ''">
+                                            End Time is required
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group text-center">
+                                <button class="button1" type="submit">
+                                    Save
+                                </button>
+                                <button class="button2"  (click)="hideDrScheduleModal()">
+                                    Close
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" id="close-drModal" data-dismiss="modal" style="display: none">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

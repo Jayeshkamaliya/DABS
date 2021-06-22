@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Welcome Doctor</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myDrNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>               
+            </div>
+            <div class="collapse navbar-collapse" id="myDrNavbar">
+                <ul class="nav navbar-nav">
+                    <li [routerLinkActive]="['active']" [routerLink]="['patientProfile']" ><a >Profile</a></li>
+                    <li [routerLinkActive]="['active']" [routerLink]="['bookDoctorAppointment']"><a>Book Appointment</a></li>
+                    <li [routerLinkActive]="['active']" [routerLink]="['patientAppointmentHistory']"><a >My Appointment</a></li>                    
+                    <li [routerLinkActive]="['active']" ><a (click)="logout()">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+</body>
+</html>

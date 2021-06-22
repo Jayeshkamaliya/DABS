@@ -1,0 +1,44 @@
+<div class="container text-center">
+    <h2>
+        Welcome {{this.patientDetails.name}}
+    </h2>
+    <div class="card card1">
+        <img src="../../../assets/Images/patient.jpg" class="card-img-top" alt="Patient Profile">
+        <div class="card-body">
+            <div class="row">
+                <div class="col col-md-6">
+                    <table class="table1">
+                        <tr>
+                            <th class="col text-right th_width">Email Address : </th>
+                            <td class="col text-left">{{this.patientDetails.emailAddress}}</td>
+                        </tr>                                             
+                        <tr>
+                            <th class="col text-right th_width">Blood Group :</th>
+                            <td class="col text-left">{{this.patientDetails.bloodGroup}}</td>
+                        </tr>
+                        <tr>
+                            <th class="col text-right th_width">Phone No :</th>
+                            <td class="col text-left">{{this.patientDetails.phoneNo}}</td>
+                        </tr>   
+                    </table>
+                </div>
+                <div class="col col-md-6">
+                    <table class="table1">
+                        <tr>
+                            <th class="col text-right th_width">Age :</th>
+                            <td class="col text-left">{{this.patientDetails.age}}</td>
+                        </tr>
+                        <tr>
+                            <th class="col text-right th_width">Gender :</th>
+                            <td class="col text-left">{{this.patientDetails.gender}}</td>
+                        </tr>
+                        <tr>
+                            <th class="col text-right th_width">Address : </th>
+                            <td class="col text-left">{{this.patientDetails.address}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

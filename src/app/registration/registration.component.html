@@ -1,0 +1,218 @@
+<div class="container-fluid">
+    <div class="row ">
+        <div class="col col-md-7">
+            <img src="../../assets/Appointment/1.jpg" width="645px" height="645px" class="rounded float-left mainImg"
+                alt="Responsive image">
+        </div>
+        <!-- USER REGISTRATION FORM-->
+        <div class="col col-md-5">
+            <div class="card1">
+                <div class="card-body">
+                    <div class="row d-flex">
+                        <div class="col-lg-12">
+                            <form #doctorRegForm="ngForm" name="doctorRegForm" id="doctorRegForm"
+                                (ngSubmit)="saveUserDetail()" novalidate>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div>                                                                                           
+                                                <img src="../../assets/Images/doctor1.png" title="Doctor">
+                                                <input class="cursor-pointer" type="radio" name="userType" (change)="onChangeUser(true)"
+                                                    checked>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div>
+                                                <img src="../../assets/Images/Patient.png" title="Patient">
+                                                <input class="cursor-pointer" type="radio" name="userType" (change)="onChangeUser(false)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Email Address <span class="text-danger">*</span></label>
+                                            <input #emailAddress="ngModel" type="text" name="emailAddress"
+                                                id="emailAddress" class="form-control"
+                                                [(ngModel)]="registrationService.userDetail.emailAddress"
+                                                [pattern]="emailPattern" required>
+                                            <div class="text-danger"
+                                                *ngIf="doctorRegForm.submitted && registrationService.userDetail.emailAddress === ''">
+                                                Email Address is required
+                                            </div>
+
+                                            <!-- <div>
+                                                <div class="text-danger"
+                                                    *ngIf="emailAddress.errors && emailAddress.errors?.pattern && emailAddress.touched">
+                                                    Email address is not valid.. .!
+                                                </div>
+                                            </div> -->
+                                            <div *ngIf="emailAddress.errors &&(emailAddress.touched || emailAddress.dirty)"
+                                                class="text-danger">
+                                                <div [hidden]="!emailAddress.errors?.pattern">
+                                                    Email address is not valid.. .!
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Password <span class="text-danger">*</span></label>
+                                            <input type="password" name="password" class="form-control"
+                                                #password="ngModel"
+                                                [(ngModel)]="registrationService.userDetail.password"
+                                                [pattern]="pswPattern" required>
+                                            <div class="text-danger"
+                                                *ngIf="doctorRegForm.submitted && registrationService.userDetail.password === ''">
+                                                Password is required
+                                            </div>
+                                            <div *ngIf="password.errors &&(password.touched || password.dirty)"
+                                                class="text-danger">
+                                                <div [hidden]="!password.errors?.pattern">
+                                                    At least minimum 8 character, 1 uppercase, 1 lowercase, 1 digit and
+                                                    1 special character(!@#$%^&*)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Name<span class="text-danger">*</span></label>
+                                            <input type="text" name="name" class="form-control"
+                                                [(ngModel)]="registrationService.userDetail.name" required>
+                                            <div class="text-danger"
+                                                *ngIf="doctorRegForm.submitted && registrationService.userDetail.name === ''">
+                                                Name is required
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Phone No<span class="text-danger">*</span></label>
+                                            <input type="text" name="phoneNo" class="form-control"
+                                                [(ngModel)]="registrationService.userDetail.phoneNo" required
+                                                (keypress)="numberOnly($event)">
+                                            <div class="text-danger"
+                                                *ngIf="doctorRegForm.submitted && registrationService.userDetail.phoneNo === ''">
+                                                Phone No is required
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" *ngIf="registrationService.userDetail.isDoctor">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Doctor Degree<span class="text-danger">*</span></label>
+                                            <input type="text" name="name" class="form-control"
+                                                [(ngModel)]="registrationService.userDetail.degree" required>
+                                            <div class="text-danger"
+                                                *ngIf="doctorRegForm.submitted && registrationService.userDetail.degree === ''">
+                                                Degree is required
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Doctor Specialization<span class="text-danger">*</span></label>
+                                            <input type="text" name="phoneNo" class="form-control"
+                                                [(ngModel)]="registrationService.userDetail.specialization" required>
+                                            <div class="text-danger"
+                                                *ngIf="doctorRegForm.submitted && registrationService.userDetail.specialization === ''">
+                                                Specialization is required
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Date of birth</label>
+                                            <div>
+                                                <input type='date' class="form-control" name="dateOfBirth"
+                                                    id="dateOfBirth"
+                                                    [(ngModel)]="registrationService.userDetail.dateOfBirth" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Gender</label>
+                                            <select class="form-control" id="gender" name="gender"
+                                                [(ngModel)]="registrationService.userDetail.gender">
+                                                <option value="">Select Gender</option>
+                                                <option *ngFor="let gender of this.genderList" [value]="gender.dbValue">
+                                                    {{gender.displayValue}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" *ngIf="registrationService.userDetail.isDoctor">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Experience<span class="text-danger">*</span></label>
+                                            <input type="text" name="experience" class="form-control"
+                                                [(ngModel)]="registrationService.userDetail.experience" required 
+                                                (keupress)="numberOnly($event)">
+                                            <div class="text-danger"
+                                                *ngIf="doctorRegForm.submitted && registrationService.userDetail.experience === ''">
+                                                Experience is required
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" *ngIf="!registrationService.userDetail.isDoctor">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Age<span class="text-danger">*</span></label>
+                                            <input type="text" name="age" id="age" class="form-control"
+                                                (keypress)="numberOnly($event)"
+                                                [(ngModel)]="registrationService.userDetail.age">
+                                            <div class="text-danger"
+                                                *ngIf="doctorRegForm.submitted && registrationService.userDetail.age === ''">
+                                                Age is required
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Blood Group<span class="text-danger">*</span></label>
+                                            <select class="form-control" id="bloodGroup" name="bloodGroup"
+                                                [(ngModel)]="registrationService.userDetail.bloodGroup">
+                                                <option value="">Select Blood Group</option>
+                                                <option *ngFor="let bloodGrp of this.bloodGrpList"
+                                                    [value]="bloodGrp.dbValue">
+                                                    {{bloodGrp.displayValue}}
+                                                </option>
+                                            </select>
+                                            <div class="text-danger"
+                                                *ngIf="doctorRegForm.submitted && registrationService.userDetail.bloodGroup === ''">
+                                                Blood Group is required
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label>Address<span class="text-danger">*</span></label>
+                                            <input type="text" name="address" id="address" #address class="form-control"
+                                                [(ngModel)]="registrationService.userDetail.address" required>
+                                            <div class="text-danger"
+                                                *ngIf="doctorRegForm.submitted && registrationService.userDetail.address === ''">
+                                                Address is required
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group text-center">                                    
+                                    <button type="submit" class="button1"><span>SAVE</span></button>
+                                    <button class="button2" (click)="this.registrationService.resetUserDetail();">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

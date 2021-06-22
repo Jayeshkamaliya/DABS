@@ -1,0 +1,122 @@
+<div class="container">
+    <h2>
+        My Appointment List
+    </h2>
+    <hr />
+    <br />
+    <div class="card1">
+        <div class="card-body">
+            <div class="scroll">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                    class="table table-striped table-bordered dataTable no-footer table-responsive-md">
+                    <thead>
+                        <tr>
+                            <th>Appointment No</th>
+                            <th>Doctor Name</th>
+                            <th>Appointment Date</th>
+                            <th>Appointment Time</th>
+                            <th>Appointment Day</th>
+                            <th>Appointment Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="appointmentList.length > 0">
+                        <tr *ngFor="let appointment of appointmentList">
+                            <td>{{ appointment.appointmentNumber}}</td>
+                            <td>{{ appointment.doctorName}}</td>
+                            <td>{{ appointment.appointmentDate}}</td>
+                            <td>{{ appointment.appointmentTime}}</td>
+                            <td>{{ appointment.appointmentDay}}</td>
+                            <td class="text-center">
+                                <span
+                                    [ngClass]="[appointment.status === 'booked'? 'booked':appointment.status === 'cancel'? 'cancel':'inProgress']">
+                                    {{appointment.status}}
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <a (click)="this.selecteAppointmentView=appointment" data-toggle="modal"
+                                    data-target="#myAppointmentModal" title="View Appointment">
+                                    <i class="fa fa-eye fa-lg" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tr class="text-center" *ngIf="appointmentList.length === 0">
+                        <td colspan="7">No Appointment Available</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--VIEW MY APPOINTMENT DETAIL MODAL -->
+<div class="modal fade" id="myAppointmentModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h3 class="modal-title bookApptHeader" id="modal_title">View Appointment Detail</h3>
+                <button type="button" (click)="hideViewAppointmentModel()" class="close">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div>
+                        <h3 class="bookApptTitle">Patient Details</h3>
+                        <table class="table">
+                            <tr>
+                                <th class="col text-right th_width">Patient Name : </th>
+                                <td>{{patientDetails.name}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col text-right th_width">Contact No. : </th>
+                                <td>{{patientDetails.phoneNo}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col text-right th_width">Address : </th>
+                                <td>{{patientDetails.address}}</td>
+                            </tr>
+                        </table>
+                        <h3 class="bookApptTitle">Appointment Details</h3>
+                        <table class="table">
+                            <tr>
+                                <th class="col text-right th_width">Appointment Number : </th>
+                                <td>{{this.selecteAppointmentView.appointmentNumber}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col text-right th_width">Doctor Name : </th>
+                                <td>{{this.selecteAppointmentView.doctorName}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col text-right th_width">Appointment Date : </th>
+                                <td>{{this.selecteAppointmentView.appointmentDate}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col text-right th_width">Appointment Day : </th>
+                                <td>{{this.selecteAppointmentView.appointmentDay}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col text-right th_width">Appointment Time : </th>
+                                <td>{{this.selecteAppointmentView.appointmentTime}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col text-right th_width">Reason for Appointment : </th>
+                                <td>{{this.selecteAppointmentView.appointmentReason}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" id="close-viewApptModal" data-dismiss="modal" style="display: none">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

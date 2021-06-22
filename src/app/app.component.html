@@ -1,0 +1,6 @@
+<app-header *ngIf="!this.commonAPIService.isLoggedIn()"></app-header>
+<dr-header *ngIf="this.commonAPIService.isLoggedIn() && this.commonAPIService.isDoctor"></dr-header>
+<patient-header *ngIf="this.commonAPIService.isLoggedIn() && !this.commonAPIService.isDoctor"></patient-header>
+<loader></loader>
+<router-outlet></router-outlet>
+<footer></footer>
